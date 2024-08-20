@@ -1,0 +1,14 @@
+spring.datasource.url=jdbc:mysql://localhost:3306/registeration_db
+spring.datasource.username=root
+#spring.datasource.password=Naksh83570#
+spring.datasource.password=root
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+
+spring.security.user.name=naksh
+spring.security.user.password=naksh
+spring.security.user.roles=ADMIN
+
+
+spring.thymeleaf.cache=false

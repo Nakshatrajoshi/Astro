@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zodiac Astrology</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    />
+    <style>
+      /* Add your custom styles here */
+      .navbar {
+        background-color: transparent !important;
+      }
+      .navbar-scrolled {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+        transition: background-color 0.3s ease-in-out;
+      }
+      .hero-section {
+        background-image: url("back-small.jpg"); /* Use a smaller, compressed image */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      .zodiac-symbol {
+        font-size: 4rem;
+        line-height: 1;
+      }
+
+      .zodiac-card-front {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .zodiac-card {
+        perspective: 1000px;
+        height: 200px;
+        cursor: pointer;
+      }
+
+      .zodiac-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+
+      .zodiac-card:hover .zodiac-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .zodiac-card-front,
+      .zodiac-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .zodiac-card-front {
+        background-color: #f8f9fa;
+      }
+
+      .zodiac-card-back {
+        background-color: #e9ecef;
+        transform: rotateY(180deg);
+      }
+
+      .zodiac-card-front img {
+        max-height: 100px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .carousel-item {
+        height: 70vh;
+        min-height: 300px;
+        background: no-repeat center center scroll;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      .carousel-caption {
+        bottom: 20%;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      /* Remove the max-width restriction */
+      @media (min-width: 992px) {
+        #heroCarousel {
+          /* max-width and margin properties removed */
+        }
+      }
+
+      .zodiac-circle-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%; /* This creates a responsive square */
+        margin: 0 auto;
+      }
+
+      .zodiac-circle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: rotate 60s linear infinite;
+      }
+
+      .zodiac-circle:hover {
+        animation-play-state: paused;
+      }
+
+      .zodiac-item {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .zodiac-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .zodiac-item:hover {
+        transform: scale(1.2);
+        z-index: 10;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #falling-shapes-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 99;
+        perspective: 1000px;
+      }
+
+      .falling-shape {
+        position: absolute;
+        top: -100px;
+        opacity: 0.5;
+        animation: fall linear;
+        transform-style: preserve-3d;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(calc(100vh + 100px)) rotateX(360deg)
+            rotateY(360deg);
+        }
+      }
+
+      .shape-cube {
+        width: 60px;
+        height: 60px;
+        transform-style: preserve-3d;
+      }
+
+      .shape-cube div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.7;
+      }
+
+      .shape-cube .front {
+        transform: rotateY(0deg) translateZ(30px);
+      }
+      .shape-cube .back {
+        transform: rotateY(180deg) translateZ(30px);
+      }
+      .shape-cube .right {
+        transform: rotateY(90deg) translateZ(30px);
+      }
+      .shape-cube .left {
+        transform: rotateY(-90deg) translateZ(30px);
+      }
+      .shape-cube .top {
+        transform: rotateX(90deg) translateZ(30px);
+      }
+      .shape-cube .bottom {
+        transform: rotateX(-90deg) translateZ(30px);
+      }
+
+      .shape-pyramid {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 60px solid rgba(255, 255, 255, 0.7);
+        transform-style: preserve-3d;
+      }
+
+      .shape-pyramid div {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.7;
+      }
+
+      .shape-pyramid .front {
+        transform: rotateX(-30deg) translateY(30px) translateZ(-17.32px);
+      }
+      .shape-pyramid .back {
+        transform: rotateX(-30deg) rotateY(180deg) translateY(30px)
+          translateZ(-17.32px);
+      }
+      .shape-pyramid .right {
+        transform: rotateY(90deg) rotateX(-30deg) translateY(30px)
+          translateZ(-17.32px);
+      }
+      .shape-pyramid .left {
+        transform: rotateY(-90deg) rotateX(-30deg) translateY(30px)
+          translateZ(-17.32px);
+      }
+
+      .shape-octahedron {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 30px solid rgba(255, 255, 255, 0.7);
+        transform-style: preserve-3d;
+      }
+
+      .shape-octahedron::after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: -30px;
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-top: 30px solid rgba(255, 255, 255, 0.7);
+      }
+
+      .shape-octahedron div {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.7;
+      }
+
+      .shape-octahedron .front {
+        transform: rotateX(-35.26deg) translateY(17.32px);
+      }
+      .shape-octahedron .back {
+        transform: rotateX(-35.26deg) rotateY(180deg) translateY(17.32px);
+      }
+      .shape-octahedron .right {
+        transform: rotateY(90deg) rotateX(-35.26deg) translateY(17.32px);
+      }
+      .shape-octahedron .left {
+        transform: rotateY(-90deg) rotateX(-35.26deg) translateY(17.32px);
+      }
+      .shape-octahedron .top {
+        transform: rotateX(90deg) translateY(-17.32px);
+      }
+      .shape-octahedron .bottom {
+        transform: rotateX(-90deg) translateY(17.32px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="falling-shapes-container"></div>
+	<header
+		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
+		<div class="col-md-3 mb-2 mb-md-0">
+			<a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+				<svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+					<use xlink:href="#bootstrap"></use>
+				</svg>
+			</a>
+		</div>
+
+		<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5">
+			<li>
+				<a th:href="@{/index}" class="nav-link px-4 link-secondary">Home</a>
+			</li>
+			<li><a href="#" class="nav-link px-4 text-white">Features</a></li>
+			<li><a href="#" class="nav-link px-4 text-white">Pricing</a></li>
+			<li><a href="#" class="nav-link px-4 text-white">FAQs</a></li>
+			<li><a href="#" class="nav-link px-4 text-white">About</a></li>
+		</ul>
+
+		<!-- login button -->
+		<div class="col-md-3 text-end mx-5 py-2">
+			<button type="button" class="btn btn-outline-primary  mx-2 px-4 py-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+				<a class="nav-link active" aria-current="page"> Login</a>
+			</button>
+
+			<!-- Signup button -->
+			<button type="button" class="btn btn-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#signupModal">
+				<a class="nav-link active" aria-current="page"> Register</a>
+			</button>
+		</div>
+	</header>
+
+	<!-- Signup Modal -->
+	<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+				<div class="modal-body p-4">
+					<form method="post" role="form" th:action="@{/register/save}">
+						<div class="mb-3">
+							<label for="username" class="form-label">Username</label>
+							<input type="text" class="form-control" id="username" required />
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email address</label>
+							<input type="email" class="form-control" id="email" required />
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" required />
+						</div>
+						<div class="mb-3">
+							<label for="confirmPassword" class="form-label">Confirm Password</label>
+							<input type="password" class="form-control" id="confirmPassword" required />
+						</div>
+
+						<button type="submit" class="btn btn-primary">Sign Up</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Login Modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="loginModalLabel">Login</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" role="form" th:action="@{/login}">
+						<div class="mb-3">
+							<label for="username" class="form-label">Username or Email</label>
+							<input type="text" class="form-control" id="username" name="username" placeholder="Email"
+								required/>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+						</div>
+						<div class="mb-3 form-check">
+							<input type="checkbox" class="form-check-input" id="rememberMe" />
+							<label class="form-check-label" for="rememberMe">Remember me</label>
+						</div>
+							<a href="#" class="text-decoration-none">Forgot Password</a>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<p class="text-muted">
+						Don't have an account?
+						<a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <main>
+      <section id="zodiac-circle" class="py-5">
+        <div class="container">
+          <h2 class="text-center mb-4">Future Lies Here</h2>
+          <div class="row">
+            <div class="col-md-3">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <div class="zodiac-circle-container">
+                <div class="zodiac-circle">
+                  <!-- Zodiac signs will be added here dynamically -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="zodiac" class="py-5">
+        <div class="container mt-4">
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <!-- Aries -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1679941208802-1862b910082d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Aries</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>March 21 - April 19</p>
+                    <p>Fire Sign</p>
+                    <p>Ruled by Mars</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Taurus -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1679941208863-0e168d0a4b9f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Taurus</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>April 20 - May 20</p>
+                    <p>Earth Sign</p>
+                    <p>Ruled by Venus</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gemini -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/geminicard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Gemini</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>May 21 - June 20</p>
+                    <p>Air Sign</p>
+                    <p>Ruled by Mercury</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cancer -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/cancercard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Cancer</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>June 21 - July 22</p>
+                    <p>Water Sign</p>
+                    <p>Ruled by Moon</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Leo -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1679941208839-43ddba36971c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Leo</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>July 23 - August 22</p>
+                    <p>Fire Sign</p>
+                    <p>Ruled by Sun</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Virgo -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/virgocard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Virgo</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>August 23 - September 22</p>
+                    <p>Earth Sign</p>
+                    <p>Ruled by Mercury</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Libra -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/libracard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Libra</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>September 23 - October 22</p>
+                    <p>Air Sign</p>
+                    <p>Ruled by Venus</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scorpio -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1679941208895-91501f622a90?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Scorpio</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>October 23 - November 21</p>
+                    <p>Water Sign</p>
+                    <p>Ruled by Pluto</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sagittarius -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/sagittariuscard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Sagittarius</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>November 22 - December 21</p>
+                    <p>Fire Sign</p>
+                    <p>Ruled by Jupiter</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Capricorn -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/capricorncard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Capricorn</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>December 22 - January 19</p>
+                    <p>Earth Sign</p>
+                    <p>Ruled by Saturn</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aquarius -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1679941208830-d621aa499fa1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Aquarius</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>January 20 - February 18</p>
+                    <p>Air Sign</p>
+                    <p>Ruled by Uranus</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pisces -->
+            <div class="col">
+              <div class="zodiac-card">
+                <div class="zodiac-card-inner">
+                  <div class="zodiac-card-front">
+                    <img
+                      src="all images/libracard.avif"
+                      alt="Aries"
+                      class="zodiac-image"
+                    />
+                    <h5 class="mt-2">Pisces</h5>
+                  </div>
+                  <div class="zodiac-card-back">
+                    <p>February 19 - March 20</p>
+                    <p>Water Sign</p>
+                    <p>Ruled by Neptune</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials" class="py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-4">Testimonials</h2>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <img
+                  src="https://via.placeholder.com/100"
+                  class="card-img-top rounded-circle mx-auto d-block mt-3"
+                  alt="Client 1"
+                  style="width: 100px; height: 100px"
+                />
+                <div class="card-body text-center">
+                  <h5 class="card-title">Client Name</h5>
+                  <p class="card-text">
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Pellentesque ac"
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Repeat for other testimonials -->
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="py-5">
+        <div class="container">
+          <h2 class="text-center mb-4">Pricing Plans</h2>
+          <!-- Pricing cards here -->
+        </div>
+      </section>
+
+      <section id="blog" class="py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-4">Our Blog</h2>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <img
+                  src="https://via.placeholder.com/300x200"
+                  class="card-img-top"
+                  alt="Blog post 1"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Blog Post Title</h5>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Pellentesque ac
+                  </p>
+                  <a href="#" class="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+            <!-- Repeat for other blog posts -->
+          </div>
+        </div>
+      </section>
+      <section id="about" class="py-5">
+        <div class="container">
+          <h2 class="text-center mb-4">About Us</h2>
+          <p>
+            Best psychic advisor – Psychic healer. Ancestral spiritual guidance,
+            traditional cleansing rituals, witchcraft and bad luck.
+          </p>
+        </div>
+      </section>
+
+      <section id="services" class="py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-4">Our Services</h2>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <img
+                src="https://via.placeholder.com/100"
+                alt="Forecast"
+                class="mb-3"
+              />
+              <h4>Forecast of Future Events</h4>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Pellentesque ac
+              </p>
+            </div>
+            <div class="col-md-4 mb-3">
+              <img
+                src="https://via.placeholder.com/100"
+                alt="Current Life"
+                class="mb-3"
+              />
+              <h4>Current Life Situation</h4>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Pellentesque ac
+              </p>
+            </div>
+            <div class="col-md-4 mb-3">
+              <img
+                src="https://via.placeholder.com/100"
+                alt="Career"
+                class="mb-3"
+              />
+              <h4>Work, Career, Finance</h4>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Pellentesque ac
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-dark text-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <h5>About Us</h5>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna
+            </p>
+          </div>
+          <div class="col-md-3">
+            <h5>Our Services</h5>
+            <ul class="list-unstyled">
+              <li>Current Life Situation</li>
+              <li>Forecast of Future Events</li>
+              <li>General Consultation</li>
+              <li>Personal Life Advice</li>
+              <li>Work, Career, Finance</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h5>Support</h5>
+            <ul class="list-unstyled">
+              <li>About us</li>
+              <li>Services</li>
+              <li>Cart</li>
+              <li>Checkout</li>
+              <li>Buy Now</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h5>Horoscope</h5>
+            <ul class="list-unstyled">
+              <li>Daily Horoscope</li>
+              <li>Weekly Horoscope</li>
+              <li>Monthly Horoscope</li>
+              <li>Yearly Horoscope</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Add background color to navbar on scroll
+      window.addEventListener("scroll", function () {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("navbar-scrolled");
+        } else {
+          navbar.classList.remove("navbar-scrolled");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const signupLink = document.getElementById("signupLink");
+        if (signupLink) {
+          signupLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            const signupTab = new bootstrap.Tab(
+              document.getElementById("signup-tab")
+            );
+            signupTab.show();
+          });
+        }
+
+        var myCarousel = new bootstrap.Carousel(
+          document.getElementById("heroCarousel"),
+          {
+            interval: 5000,
+            wrap: true,
+            pause: "hover",
+          }
+        );
+
+        // Create zodiac circle
+        const zodiacSigns = [
+          {
+            name: "Aries",
+            image:
+              "https://plus.unsplash.com/premium_photo-1679941208802-1862b910082d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          },
+          {
+            name: "Taurus",
+            image:
+              "https://plus.unsplash.com/premium_photo-1679941208863-0e168d0a4b9f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          },
+          { name: "Gemini", image: "all images/geminicard.avif" },
+          { name: "Cancer", image: "all images/cancercard.avif" },
+          {
+            name: "Leo",
+            image:
+              "https://plus.unsplash.com/premium_photo-1679941208839-43ddba36971c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          },
+          { name: "Virgo", image: "all images/virgocard.avif" },
+          { name: "Libra", image: "all images/libracard.avif" },
+          {
+            name: "Scorpio",
+            image:
+              "https://plus.unsplash.com/premium_photo-1679941208895-91501f622a90?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          },
+          { name: "Sagittarius", image: "all images/sagittariuscard.avif" },
+          { name: "Capricorn", image: "all images/capricorncard.avif" },
+          {
+            name: "Aquarius",
+            image:
+              "https://plus.unsplash.com/premium_photo-1679941208830-d621aa499fa1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          },
+          { name: "Pisces", image: "all images/libracard.avif" },
+        ];
+
+        const zodiacCircle = document.querySelector(".zodiac-circle");
+        const radius = 180; // Adjust this value to change the circle size
+
+        zodiacSigns.forEach((sign, index) => {
+          const angle = (index / zodiacSigns.length) * 2 * Math.PI;
+          const x = radius * Math.cos(angle);
+          const y = radius * Math.sin(angle);
+
+          const zodiacItem = document.createElement("div");
+          zodiacItem.className = "zodiac-item";
+          zodiacItem.style.left = `${x + radius}px`;
+          zodiacItem.style.top = `${y + radius}px`;
+          zodiacItem.style.width = "120px"; // Set circle size
+          zodiacItem.style.height = "120px"; // Set circle size
+          zodiacItem.style.borderRadius = "50%"; // Make it circular
+          zodiacItem.style.overflow = "hidden";
+          zodiacItem.style.margin = "30px";
+
+          const img = document.createElement("img");
+          img.src = sign.image;
+          img.alt = sign.name;
+          img.style.width = "100%"; // Increased image size
+          img.style.height = "100%";
+          img.style.objectFit = "cover";
+          // Increased image size
+          zodiacItem.appendChild(img);
+
+          zodiacCircle.appendChild(zodiacItem);
+        });
+
+        // Add hover effect
+        const zodiacItems = document.querySelectorAll(".zodiac-item");
+        zodiacCircle.style.animationDuration = "20s"; // Faster speed
+        zodiacItems.forEach((item) => {
+          item.addEventListener("mouseover", () => {
+            zodiacCircle.style.animationPlayState = "paused";
+          });
+          item.addEventListener("mouseout", () => {
+            zodiacCircle.style.animationPlayState = "running";
+          });
+        });
+
+        // Falling shapes
+        const shapeContainer = document.getElementById(
+          "falling-shapes-container"
+        );
+        const zodiacImages = [
+          "https://plus.unsplash.com/premium_photo-1679941208802-1862b910082d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "https://plus.unsplash.com/premium_photo-1679941208863-0e168d0a4b9f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "https://plus.unsplash.com/premium_photo-1679941208839-43ddba36971c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "https://plus.unsplash.com/premium_photo-1679941208895-91501f622a90?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "https://plus.unsplash.com/premium_photo-1679941208830-d621aa499fa1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        ];
+
+        function createFallingShape() {
+          const shape = document.createElement("div");
+          const imageUrl =
+            zodiacImages[Math.floor(Math.random() * zodiacImages.length)];
+          const shapeType = ["cube", "pyramid", "octahedron"][
+            Math.floor(Math.random() * 3)
+          ];
+
+          shape.className = `falling-shape shape-${shapeType}`;
+          shape.style.left = `${Math.random() * 100}vw`;
+          shape.style.animationDuration = `${Math.random() * 5 + 5}s`;
+
+          let sides;
+          if (shapeType === "cube") {
+            sides = ["front", "back", "right", "left", "top", "bottom"];
+          } else if (shapeType === "pyramid") {
+            sides = ["front", "back", "right", "left"];
+          } else {
+            // octahedron
+            sides = ["front", "back", "right", "left", "top", "bottom"];
+          }
+
+          sides.forEach((side) => {
+            const face = document.createElement("div");
+            face.className = side;
+            face.style.backgroundImage = `url(${imageUrl})`;
+            shape.appendChild(face);
+          });
+
+          shapeContainer.appendChild(shape);
+
+          // Remove the shape after animation ends
+          shape.addEventListener("animationend", () => {
+            shape.remove();
+          });
+        }
+
+        // Create 12 falling shapes (one for each zodiac sign)
+        for (let i = 0; i < 12; i++) {
+          setTimeout(createFallingShape, i * 500);
+        }
+      });
+    </script>
+  </body>
+</html>

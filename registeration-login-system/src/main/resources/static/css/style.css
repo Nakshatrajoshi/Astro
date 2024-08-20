@@ -1,0 +1,291 @@
+/* Add your custom styles here */
+.navbar {
+  background-color: transparent !important;
+}
+.navbar-scrolled {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transition: background-color 0.3s ease-in-out;
+}
+.hero-section {
+  background-image: url("back-small.jpg"); /* Use a smaller, compressed image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.zodiac-symbol {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.zodiac-card-front {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.zodiac-card {
+  perspective: 1000px;
+  height: 200px;
+  cursor: pointer;
+}
+
+.zodiac-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.zodiac-card:hover .zodiac-card-inner {
+  transform: rotateY(180deg);
+}
+
+.zodiac-card-front,
+.zodiac-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.zodiac-card-front {
+  background-color: #f8f9fa;
+}
+
+.zodiac-card-back {
+  background-color: #e9ecef;
+  transform: rotateY(180deg);
+}
+
+.zodiac-card-front img {
+  max-height: 100px;
+  width: auto;
+  object-fit: contain;
+}
+
+.carousel-item {
+  height: 70vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.carousel-caption {
+  bottom: 20%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Remove the max-width restriction */
+@media (min-width: 992px) {
+  #heroCarousel {
+    /* max-width and margin properties removed */
+  }
+}
+
+.zodiac-circle-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* This creates a responsive square */
+  margin: 0 auto;
+}
+
+.zodiac-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: rotate 60s linear infinite;
+}
+
+.zodiac-circle:hover {
+  animation-play-state: paused;
+}
+
+.zodiac-item {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.zodiac-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.zodiac-item:hover {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#falling-shapes-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+  perspective: 1000px;
+}
+
+.falling-shape {
+  position: absolute;
+  top: -100px;
+  opacity: 0.5;
+  animation: fall linear;
+  transform-style: preserve-3d;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(calc(100vh + 100px)) rotateX(360deg) rotateY(360deg);
+  }
+}
+
+.shape-cube {
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+}
+
+.shape-cube div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.shape-cube .front {
+  transform: rotateY(0deg) translateZ(30px);
+}
+.shape-cube .back {
+  transform: rotateY(180deg) translateZ(30px);
+}
+.shape-cube .right {
+  transform: rotateY(90deg) translateZ(30px);
+}
+.shape-cube .left {
+  transform: rotateY(-90deg) translateZ(30px);
+}
+.shape-cube .top {
+  transform: rotateX(90deg) translateZ(30px);
+}
+.shape-cube .bottom {
+  transform: rotateX(-90deg) translateZ(30px);
+}
+
+.shape-pyramid {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 60px solid rgba(255, 255, 255, 0.7);
+  transform-style: preserve-3d;
+}
+
+.shape-pyramid div {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.shape-pyramid .front {
+  transform: rotateX(-30deg) translateY(30px) translateZ(-17.32px);
+}
+.shape-pyramid .back {
+  transform: rotateX(-30deg) rotateY(180deg) translateY(30px)
+    translateZ(-17.32px);
+}
+.shape-pyramid .right {
+  transform: rotateY(90deg) rotateX(-30deg) translateY(30px)
+    translateZ(-17.32px);
+}
+.shape-pyramid .left {
+  transform: rotateY(-90deg) rotateX(-30deg) translateY(30px)
+    translateZ(-17.32px);
+}
+
+.shape-octahedron {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 30px solid rgba(255, 255, 255, 0.7);
+  transform-style: preserve-3d;
+}
+
+.shape-octahedron::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: -30px;
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-top: 30px solid rgba(255, 255, 255, 0.7);
+}
+
+.shape-octahedron div {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.shape-octahedron .front {
+  transform: rotateX(-35.26deg) translateY(17.32px);
+}
+.shape-octahedron .back {
+  transform: rotateX(-35.26deg) rotateY(180deg) translateY(17.32px);
+}
+.shape-octahedron .right {
+  transform: rotateY(90deg) rotateX(-35.26deg) translateY(17.32px);
+}
+.shape-octahedron .left {
+  transform: rotateY(-90deg) rotateX(-35.26deg) translateY(17.32px);
+}
+.shape-octahedron .top {
+  transform: rotateX(90deg) translateY(-17.32px);
+}
+.shape-octahedron .bottom {
+  transform: rotateX(-90deg) translateY(17.32px);
+}

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	 <link
+	    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	    rel="stylesheet"
+	    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	    crossorigin="anonymous"
+	  />
+	  <link
+	    rel="stylesheet"
+	    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+	    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+	    crossorigin="anonymous"
+	    referrerpolicy="no-referrer"
+	  />
+	  <link
+	    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	    rel="stylesheet"
+	  />
+	  <link
+	    rel="stylesheet"
+	    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+	  />
+	  <link rel="stylesheet" href="style.css" />
+	</head>
+
+<body>
+	<header
+		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
+		<div class="col-md-3 mb-2 mb-md-0">
+			<a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+				<svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+					<use xlink:href="#bootstrap"></use>
+				</svg>
+			</a>
+		</div>
+
+		<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5">
+			<li>
+				<a th:href="@{/index}" class="nav-link px-4 link-secondary">Home</a>
+			</li>
+			<li><a href="#" class="nav-link px-4 text-white">Features</a></li>
+			<li><a href="#" class="nav-link px-4 text-white">Pricing</a></li>
+			<li><a href="#" class="nav-link px-4 text-white">FAQs</a></li>
+			<li><a href="#" class="nav-link px-4 text-white">About</a></li>
+		</ul>
+
+		<!-- login button -->
+		<div class="col-md-3 text-end mx-5 py-2">
+			<button type="button" class="btn btn-outline-primary  mx-2 px-4 py-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+				<a class="nav-link active" aria-current="page"> Login</a>
+			</button>
+
+			<!-- Signup button -->
+			<button type="button" class="btn btn-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#signupModal">
+				<a class="nav-link active" aria-current="page"> Register</a>
+			</button>
+		</div>
+	</header>
+
+	<!-- Signup Modal -->
+	<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+				<div class="modal-body p-4">
+					<form method="post" role="form" th:action="@{/register/save}">
+						<div class="mb-3">
+							<label for="username" class="form-label">Username</label>
+							<input type="text" class="form-control" id="username" required />
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email address</label>
+							<input type="email" class="form-control" id="email" required />
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" required />
+						</div>
+						<div class="mb-3">
+							<label for="confirmPassword" class="form-label">Confirm Password</label>
+							<input type="password" class="form-control" id="confirmPassword" required />
+						</div>
+
+						<button type="submit" class="btn btn-primary">Sign Up</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Login Modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="loginModalLabel">Login</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" role="form" th:action="@{/login}">
+						<div class="mb-3">
+							<label for="username" class="form-label">Username or Email</label>
+							<input type="text" class="form-control" id="username" name="username" placeholder="Email"
+								required/>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+						</div>
+						<div class="mb-3 form-check">
+							<input type="checkbox" class="form-check-input" id="rememberMe" />
+							<label class="form-check-label" for="rememberMe">Remember me</label>
+						</div>
+							<a href="#" class="text-decoration-none">Forgot Password</a>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<p class="text-muted">
+						Don't have an account?
+						<a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	   <!----------------------------------- Index Page zodiac code -------------------------------------->
+
+	    <div id="falling-shapes-container"></div>
+
+	    <!-- Index page content starts here      -->
+	    <div class="container-fluid px-0">
+	      <div
+	        id="heroCarousel"
+	        class="carousel slide carousel-fade"
+	        data-bs-ride="carousel"
+	      >
+	        <div class="carousel-inner">
+	          <div
+	            class="carousel-item active"
+	            style="background-image: url('back.jpg')"
+	          >
+	            <div class="carousel-caption">
+	              <h1>Consultancy – Tarot Coach</h1>
+	              <p>
+	                We provide methods to guard against and eliminate these spirits.
+	              </p>
+	            </div>
+	          </div>
+	          <div
+	            class="carousel-item"
+	            style="
+	              background-image: url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+	            "
+	          >
+	            <div class="carousel-caption">
+	              <h1>Discover Your Path</h1>
+	              <p>Unlock the secrets of your future with our expert guidance.</p>
+	            </div>
+	          </div>
+	          <div
+	            class="carousel-item"
+	            style="background-image: url('all images/carosal.avif')"
+	          >
+	            <div class="carousel-caption">
+	              <h1>Spiritual Healing</h1>
+	              <p>
+	                Find balance and harmony in your life through our spiritual
+	                practices.
+	              </p>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
+	    <main>
+	      <section id="zodiac-circle" class="py-5">
+	        <div class="container">
+	          <h2 class="text-center mb-4">Future Lies Here</h2>
+	          <div class="row">
+	            <div class="col-md-3">
+	              <p>
+	                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+	                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+	                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+	                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+	                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+	                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+	                sunt in culpa qui officia deserunt mollit anim id est laborum.
+	              </p>
+	            </div>
+	            <div class="col-md-6">
+	              <div class="zodiac-circle-container">
+	                <div class="zodiac-circle">
+	                  <!-- Zodiac signs will be added here dynamically -->
+	                </div>
+	              </div>
+	            </div>
+	            <div class="col-md-3">
+	              <p>
+	                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+	                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+	                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+	                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+	                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+	                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+	                sunt in culpa qui officia deserunt mollit anim id est laborum.
+	              </p>
+	            </div>
+	          </div>
+	        </div>
+	      </section>
+
+	      <section id="zodiac" class="py-5">
+	        <div class="container mt-4">
+	          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+	            <!-- Aries -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="https://plus.unsplash.com/premium_photo-1679941208802-1862b910082d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Aries</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>March 21 - April 19</p>
+	                    <p>Fire Sign</p>
+	                    <p>Ruled by Mars</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Taurus -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="https://plus.unsplash.com/premium_photo-1679941208863-0e168d0a4b9f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Taurus</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>April 20 - May 20</p>
+	                    <p>Earth Sign</p>
+	                    <p>Ruled by Venus</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Gemini -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/geminicard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Gemini</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>May 21 - June 20</p>
+	                    <p>Air Sign</p>
+	                    <p>Ruled by Mercury</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Cancer -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/cancercard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Cancer</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>June 21 - July 22</p>
+	                    <p>Water Sign</p>
+	                    <p>Ruled by Moon</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Leo -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="https://plus.unsplash.com/premium_photo-1679941208839-43ddba36971c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Leo</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>July 23 - August 22</p>
+	                    <p>Fire Sign</p>
+	                    <p>Ruled by Sun</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Virgo -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/virgocard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Virgo</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>August 23 - September 22</p>
+	                    <p>Earth Sign</p>
+	                    <p>Ruled by Mercury</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Libra -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/libracard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Libra</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>September 23 - October 22</p>
+	                    <p>Air Sign</p>
+	                    <p>Ruled by Venus</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Scorpio -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="https://plus.unsplash.com/premium_photo-1679941208895-91501f622a90?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Scorpio</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>October 23 - November 21</p>
+	                    <p>Water Sign</p>
+	                    <p>Ruled by Pluto</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Sagittarius -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/sagittariuscard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Sagittarius</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>November 22 - December 21</p>
+	                    <p>Fire Sign</p>
+	                    <p>Ruled by Jupiter</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Capricorn -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/capricorncard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Capricorn</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>December 22 - January 19</p>
+	                    <p>Earth Sign</p>
+	                    <p>Ruled by Saturn</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Aquarius -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="https://plus.unsplash.com/premium_photo-1679941208830-d621aa499fa1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Aquarius</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>January 20 - February 18</p>
+	                    <p>Air Sign</p>
+	                    <p>Ruled by Uranus</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <!-- Pisces -->
+	            <div class="col">
+	              <div class="zodiac-card">
+	                <div class="zodiac-card-inner">
+	                  <div class="zodiac-card-front">
+	                    <img
+	                      src="all images/libracard.avif"
+	                      alt="Aries"
+	                      class="zodiac-image"
+	                    />
+	                    <h5 class="mt-2">Pisces</h5>
+	                  </div>
+	                  <div class="zodiac-card-back">
+	                    <p>February 19 - March 20</p>
+	                    <p>Water Sign</p>
+	                    <p>Ruled by Neptune</p>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </section>
+
+	      <section id="testimonials" class="py-5 bg-light">
+	        <div class="container">
+	          <h2 class="text-center mb-4">Testimonials</h2>
+	          <div class="row">
+	            <div class="col-md-4 mb-3">
+	              <div class="card">
+	                <img
+	                  src="https://via.placeholder.com/100"
+	                  class="card-img-top rounded-circle mx-auto d-block mt-3"
+	                  alt="Client 1"
+	                  style="width: 100px; height: 100px"
+	                />
+	                <div class="card-body text-center">
+	                  <h5 class="card-title">Client Name</h5>
+	                  <p class="card-text">
+	                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	                    Pellentesque ac"
+	                  </p>
+	                </div>
+	              </div>
+	            </div>
+	            <!-- Repeat for other testimonials -->
+	          </div>
+	        </div>
+	      </section>
+
+	      <section id="pricing" class="py-5">
+	        <div class="container">
+	          <h2 class="text-center mb-4">Pricing Plans</h2>
+	          <!-- Pricing cards here -->
+	        </div>
+	      </section>
+
+	      <section id="blog" class="py-5 bg-light">
+	        <div class="container">
+	          <h2 class="text-center mb-4">Our Blog</h2>
+	          <div class="row">
+	            <div class="col-md-4 mb-3">
+	              <div class="card">
+	                <img
+	                  src="https://via.placeholder.com/300x200"
+	                  class="card-img-top"
+	                  alt="Blog post 1"
+	                />
+	                <div class="card-body">
+	                  <h5 class="card-title">Blog Post Title</h5>
+	                  <p class="card-text">
+	                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	                    Pellentesque ac
+	                  </p>
+	                  <a href="#" class="btn btn-primary">Read More</a>
+	                </div>
+	              </div>
+	            </div>
+	            <!-- Repeat for other blog posts -->
+	          </div>
+	        </div>
+	      </section>
+	      <section id="about" class="py-5">
+	        <div class="container">
+	          <h2 class="text-center mb-4">About Us</h2>
+	          <p>
+	            Best psychic advisor – Psychic healer. Ancestral spiritual guidance,
+	            traditional cleansing rituals, witchcraft and bad luck.
+	          </p>
+	        </div>
+	      </section>
+
+	      <section id="services" class="py-5 bg-light">
+	        <div class="container">
+	          <h2 class="text-center mb-4">Our Services</h2>
+	          <div class="row">
+	            <div class="col-md-4 mb-3">
+	              <img
+	                src="https://via.placeholder.com/100"
+	                alt="Forecast"
+	                class="mb-3"
+	              />
+	              <h4>Forecast of Future Events</h4>
+	              <p>
+	                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	                Pellentesque ac
+	              </p>
+	            </div>
+	            <div class="col-md-4 mb-3">
+	              <img
+	                src="https://via.placeholder.com/100"
+	                alt="Current Life"
+	                class="mb-3"
+	              />
+	              <h4>Current Life Situation</h4>
+	              <p>
+	                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	                Pellentesque ac
+	              </p>
+	            </div>
+	            <div class="col-md-4 mb-3">
+	              <img
+	                src="https://via.placeholder.com/100"
+	                alt="Career"
+	                class="mb-3"
+	              />
+	              <h4>Work, Career, Finance</h4>
+	              <p>
+	                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	                Pellentesque ac
+	              </p>
+	            </div>
+	          </div>
+	        </div>
+	      </section>
+	    </main>
+
+	    <footer class="bg-dark text-light py-4">
+	      <div class="container">
+	        <div class="row">
+	          <div class="col-md-3">
+	            <h5>About Us</h5>
+	            <p>
+	              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+	              eiusmod tempor incididunt ut labore et dolore magna
+	            </p>
+	          </div>
+	          <div class="col-md-3">
+	            <h5>Our Services</h5>
+	            <ul class="list-unstyled">
+	              <li>Current Life Situation</li>
+	              <li>Forecast of Future Events</li>
+	              <li>General Consultation</li>
+	              <li>Personal Life Advice</li>
+	              <li>Work, Career, Finance</li>
+	            </ul>
+	          </div>
+	          <div class="col-md-3">
+	            <h5>Support</h5>
+	            <ul class="list-unstyled">
+	              <li>About us</li>
+	              <li>Services</li>
+	              <li>Cart</li>
+	              <li>Checkout</li>
+	              <li>Buy Now</li>
+	            </ul>
+	          </div>
+	          <div class="col-md-3">
+	            <h5>Horoscope</h5>
+	            <ul class="list-unstyled">
+	              <li>Daily Horoscope</li>
+	              <li>Weekly Horoscope</li>
+	              <li>Monthly Horoscope</li>
+	              <li>Yearly Horoscope</li>
+	            </ul>
+	          </div>
+	        </div>
+	      </div>
+	    </footer>
+
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	    <script src="index.js"></script>
+	    <script
+	      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	      crossorigin="anonymous"
+	    ></script>
+	  </body>
+	</html>
